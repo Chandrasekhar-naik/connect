@@ -14,6 +14,7 @@ import { Route as LogoutRouteImport } from './routes/logout'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as UIdRouteImport } from './routes/u.$id'
 
 const ProfileRoute = ProfileRouteImport.update({
   id: '/profile',
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UIdRoute = UIdRouteImport.update({
+  id: '/u/$id',
+  path: '/u/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/chat': typeof ChatRoute
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
+  '/u/$id': typeof UIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/chat': typeof ChatRoute
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
+  '/u/$id': typeof UIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,14 @@ export interface FileRoutesById {
   '/chat': typeof ChatRoute
   '/logout': typeof LogoutRoute
   '/profile': typeof ProfileRoute
+  '/u/$id': typeof UIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/chat' | '/logout' | '/profile'
+  fullPaths: '/' | '/about' | '/chat' | '/logout' | '/profile' | '/u/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/chat' | '/logout' | '/profile'
-  id: '__root__' | '/' | '/about' | '/chat' | '/logout' | '/profile'
+  to: '/' | '/about' | '/chat' | '/logout' | '/profile' | '/u/$id'
+  id: '__root__' | '/' | '/about' | '/chat' | '/logout' | '/profile' | '/u/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,6 +86,7 @@ export interface RootRouteChildren {
   ChatRoute: typeof ChatRoute
   LogoutRoute: typeof LogoutRoute
   ProfileRoute: typeof ProfileRoute
+  UIdRoute: typeof UIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/u/$id': {
+      id: '/u/$id'
+      path: '/u/$id'
+      fullPath: '/u/$id'
+      preLoaderRoute: typeof UIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -125,6 +142,7 @@ const rootRouteChildren: RootRouteChildren = {
   ChatRoute: ChatRoute,
   LogoutRoute: LogoutRoute,
   ProfileRoute: ProfileRoute,
+  UIdRoute: UIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
