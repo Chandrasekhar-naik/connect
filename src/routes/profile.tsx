@@ -22,6 +22,9 @@ function EditProfile() {
   const [phone, setPhone] = useState("");
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [pw1, setPw1] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [pwBusy, setPwBusy] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => { if (!loading && !user) navigate({ to: "/" }); }, [user, loading, navigate]);
@@ -54,6 +57,17 @@ function EditProfile() {
     navigate({ to: "/chat" });
   };
 
+  const changePassword = async () => {
+    if (pw1.length < 6) return toast.error("Password must be at least 6 characters");
+    if (pw1 !== pw2) return toast.error("Passwords do not match");
+    setPwBusy(true);
+    const { error } = await supabase.auth.updateUser({ password: pw1 });
+    setPwBusy(false);
+    if (error) return toast.error(error.message);
+    setPw1(""); setPw2("");
+    toast.success("Password updated");
+  };
+
   if (!user) return null;
   return (
     <main className="min-h-screen bg-background">
@@ -82,6 +96,18 @@ function EditProfile() {
           <div className="space-y-2"><Label>Email</Label><Input value={user.email ?? ""} disabled /></div>
           <Button onClick={save} disabled={busy} className="w-full">
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save changes"}
+          </Button>
+        </Card>
+
+        <Card className="p-8 space-y-6 mt-6">
+          <div>
+            <h2 className="text-lg font-semibold">Change password</h2>
+            <p className="text-sm text-muted-foreground">Update the password used to sign in.</p>
+          </div>
+          <div className="space-y-2"><Label>New password</Label><Input type="password" value={pw1} onChange={(e) => setPw1(e.target.value)} minLength={6} /></div>
+          <div className="space-y-2"><Label>Confirm new password</Label><Input type="password" value={pw2} onChange={(e) => setPw2(e.target.value)} minLength={6} /></div>
+          <Button onClick={changePassword} disabled={pwBusy || !pw1 || !pw2} variant="secondary" className="w-full">
+            {pwBusy ? <Loader2 className="h-4 w-4 animate-spin" /> : "Update password"}
           </Button>
         </Card>
       </div>
