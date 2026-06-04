@@ -6,4 +6,11 @@
 // You can pass additional config via defineConfig({ vite: { ... } }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-export default defineConfig();
+export default defineConfig({
+  vite: {
+    preview: {
+      host: "0.0.0.0",
+      allowedHosts: ["connect-frontend2.onrender.com"],
+    },
+  },
+});
