@@ -10,7 +10,7 @@ export default defineConfig({
   vite: {
     preview: {
       host: "0.0.0.0",
-      allowedHosts: ["connect-frontend2.onrender.com"],
+      allowedHosts: ["https://connect-frontend-u0gc.onrender.com"],
     },
   },
 });
