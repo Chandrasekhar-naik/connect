@@ -1,4 +1,4 @@
-const API_BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:5000").replace(/\/$/, "");
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "https://connect-35ho.onrender.com").replace(/\/$/, "");
 const TOKEN_KEY = "pulse.token";
 async function request(path, options = {}) {
     const headers = new Headers(options.headers);
