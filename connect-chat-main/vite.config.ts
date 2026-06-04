@@ -9,8 +9,7 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 export default defineConfig({
   vite: {
     preview: {
-      host: "0.0.0.0",
-      allowedHosts: ["https://connect-frontend-u0gc.onrender.com"],
+      allowedHosts: ["connect-frontend-u0gc.onrender.com"],
     },
   },
 });
